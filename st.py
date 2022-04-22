@@ -279,17 +279,21 @@ We have two sections for content-based recommendations: text-based recommendatio
 
 #### 1.	Searching with images can be divided into the following steps:
     
-We consider that when we get a picture of a potential customer from social media, we want to find the right match for that customer from our product catalog. However, the background of the image on social media may be too complicated, so using the image directly for recommendation may affect the recommendation result due to the background. Therefore, we need to train a model to find the coordinates of the clothes and then filter the effect of the background on the recommendation system by cutting it, so that the recommendation system can focus on the clothes only.
+We consider that when we get a picture of a potential customer from social media, we want to find the right match for that customer from our product catalog. However, the background of the image on social media may be too complicated, so using the image directly for recommendation may affect the recommendation result due to the background. Therefore, we need to train a model to find the coordinates of the clothes and then filter the effect of the background on the recommendation system by cutting it, so that the recommendation system can focus on the clothes only.""")
 
+st.image('./yolo.png')
+
+st.write("""
 Therefore, we trained a set of object detection model using the data in the deep fashion dataset, and the process is as follows: the data already includes the bounding box content, but some of the categories and bounding box range is wrong, for example, the position of the bounding box exceeds the length and width of the image, so we first use opencv and logic comparison to filter out the images that do not match the length and width, and we found that 36 categories are closer to the content of clothing or accessories. Therefore, we annotate the proportion and category of the bounding box, which is about 350,000 images in total, and train the model with yolo v5l to get a set of object detection model.
 
-Using the object detection model helps us to know the position of the clothes and crop them. After the image is cut, we can know the position of the clothes in it, and we use VGG16 to find out the images that are similar to the images in our database and use these images as a basis for recommendation.
+Using the object detection model helps us to know the position of the clothes and crop them. After the image is cut, we can know the position of the clothes in it, and we use VGG16 to find out the images that are similar to the images in our database and use these images as a basis for recommendation.""")
 
+st.image('./deepimage.png')
 
-
+st.write("""
 #### 2.	Searching by text can be separated into the following steps:
 
-Considering the users' direct access to our website to find the content related to the product title using text search, we tried three nlp models to calculate the similar between the user input and the product there.
+Considering that after reading an item in the system, users may be interested in products similar to the title of that item, we tried three nlp models to calculate the similarity between user input and the products there.
 
 Before introducing the nlp model, we would like to explain our process of processing the data. Among the top-fashion data we use, some of them are listed with multiple contents because of different colors or sizes. To calculate the similarity between the user input and the title in the top fashion data.
 Our input title and image is:
@@ -477,6 +481,15 @@ The primary goal of this project is to provide recommendations to the user in a 
 The future work of the project includes improving the efficiency of the system. And it should also be able to give appropriate recommendations to the users who don’t have any previous purchase history or to the new users. In future we can try to use recurrent neural networks and deep learning. With the help of deep learning techniques we can overcome some of the drawbacks of the matrix factorization technique. Deep learning uses recurrent neural networks to accommodate time in the recommender system which is not possible in the matrix factorization method. We can also work on providing sub-optimal recommendations to the user and record the reaction of the user and it can be used in the future by the system.
 
 ## 7. State of work
+
+
+> Qi Zhang: Chief Marketing Officer
+
+> Chihshen: Chief Technology Officer
+
+> Zhipeng: Chief Product Officer
+
+
 The whole project is really a team effort. At the beginning, all of us were involved in data collection and exploration to choose the most suitable fashion data source. Qi Zhang arranged some meetings with experts in the fashion domain to understand more about the topic. Both Zhipeng and Qi Zhang are participated in collaborative-filtering recommender study and design. Chihshen is mainly responsible for image-based model training, image crawler, image search system and recommender design, and streamlit report format preparation. Zhipeng is responsible for driving the project discussion and monitoring the project progress, aligning the internal meeting time and the meeting with our project instructor. Zhipeng mainly focuses on data manipulation, visualiztion, recommender design and evaluation. Along the project progress, all of us work close to each other in brainstorming, discussion, and report writing.
 
 
