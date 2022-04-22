@@ -295,7 +295,7 @@ Using the object detection model helps us to know the position of the clothes an
 
 
 
-####2.	Searching by text can be separated into the following steps:
+#### 2.	Searching by text can be separated into the following steps:
 
 Considering the users' direct access to our website to find the content related to the product title using text search, we tried three nlp models to calculate the similar between the user input and the product there.
 
