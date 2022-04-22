@@ -399,14 +399,14 @@ To examine which algorithm had the best performance per metric, we performed pai
 
 The Long Tail plot is used to explore popularity patterns in user-item interaction data. Typically, a small number of items will make up most of the volume of interactions and this is referred to as the "head". The "long tail" typically consists of most products, but make up a small percent of interaction volume.""")
 
-st.image('./fig3')
+st.image('./fig3.png')
 
 st.write("""
 
 We made MAR@K available in recmetrics, and MAR@K gives insight into how well the recommender is able to recall all the items the user has rated positively in the test set.
 """)
 
-st.image('./fig33')
+st.image('./fig33.png')
 
 st.write(""" 
 From the figure, we can find that by MAR@K, the collaborative filter is able to recall the relevant items for the user better than the other models.
