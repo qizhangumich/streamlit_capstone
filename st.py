@@ -159,20 +159,11 @@ The pipeline of a recommendation system has the following five phases
 
 
 
-## 3.	Team Roles and Responsibilities
-ZhiPeng, Luo: Zhipeng served as the project coordinator and worked on the data cleaning, pre-processing, transformations, extractions for modeling and web application database. Involved in feature engineering, scripting jobs, capturing model outcomes and prepare the final presentation.
 
-ChihShen, Hsu: content recommendation, top_fashion dataset crawler, build yolo model, build image search system, build text search system
-
-Qi, Zhang: Qi worked on the data cleaning, data exploration (text sentiment analysis), item-item based collaborative filtering, model evaluation, front-end presentation of recommendation results and prepare the final report, etc.
-
-
-
-## 4.	Data Pre-processing
+## 3.	Data Source
     
-### 4.1	Data Acquisition
     
-#### 1.	Amazon review dataset
+#### 3.1.	Amazon review dataset
     
 We use Amazon review dataset (2018),which is an updated version of the Amazon review dataset released in 2014. This dataset includes reviews (ratings, text, helpfulness votes), product metadata (descriptions, category information, price, brand, and image features), and links (also viewed/also bought graphs). It can be downloaded from the following website: http://deepyeti.ucsd.edu/jianmo/amazon/index.html. 
 For our team, we only use the sub-category AMAZON FASHION, which includes:
@@ -199,15 +190,16 @@ In reviews, it include:
 B.	Metadata:
 In the meta transaction metadata for each review shown on the review page. Such information includes: Product information, e.g. color (white or black), size (large or small), package type (hardcover or electronics), etc. Product images that are taken after the user received the product. 
 
-#### 2.	Amazon api datasets
+#### 3.2	Amazon api datasets
     
 Since the review data is obtained by ucsd directly in the amazon crawler, although the crawler data includes the user's review data, but the crawler data includes some books, coats, jewelry, glasses, backpacks and other accessories in addition to clothing data, and the lack of label data to label these contents, so in the absence of the user's past browsing history It is easy to confuse the classification and difficult to recommend the content. Therefore, instead of using the data from ucsd, the analysis was conducted using the data obtained from the api. The content of the data is similar to the above uscd, including asin, title, image hyperlink, but the related comment data is missing.
 
-#### 3.	Deep Fashion
+#### 3.3	Deep Fashion
     
 We found that the deep fashion dataset includes these data, so we used the data to train the yolo model with a total of about 350,000 images.
 
-### 4.1	Data Preparation
+
+### 3.4	Data Preparation
     
 We selected metadata with 186,637 records and review with 883,636 records. We first merged the data, we used asin as the primary key to merge the two data sets, and the merged table with 875,121 records. 518,714 records were retained after removing duplicates. We keep the following columns: reviewerID, reviewTime, asin, title, brand,overall, imageURLHighRes for further exploration. 
 
@@ -271,7 +263,7 @@ st.write("""
 For API data, we first remove null value from the api data, and remove the duplicate title data, and finally keep the following five columns: asin, title, image url, brand, color, with a total data volume of about 17,000, and crawl the image url to get the corresponding 17,000 images.
 
 
-## 5.	Model Analysis
+## 4.	Model Analysis
 To build a recommender engine for a E-commerce giant like Amazon, there are many practical factors to consider:
  > Generalization: With the diverse categories of items that are available for sale the recommender engine needs to be able to recommend items across different categories.
  
@@ -279,7 +271,7 @@ To build a recommender engine for a E-commerce giant like Amazon, there are many
  
  > Scalability: When new data is available, how do you retrain the model? 
 
-### 5.1	Content-based Recommendation
+### 4.1	Content-based Recommendation
     
 We have two sections for content-based recommendations: text-based recommendations with database titles, and user-image based recommendations:
 
@@ -331,7 +323,7 @@ st.image('./tf-idf2.png')
 st.image('./tf-idf3.png')
 
 st.write("""
-### 5.2	Popularity-based Recommendation
+### 4.2	Popularity-based Recommendation
 
 A common (and usually hard-to-beat) baseline approach is the Popularity model. This model is not actually personalized it simply recommends to a user the most popular anime that the user has not previously consumed.
 
@@ -353,7 +345,7 @@ st.dataframe(df3)
 # B00RLSCLJM	4.838596	285	10.0
 
 st.write("""
-### 5.3	Collaborative Filtering
+### 4.3	Collaborative Filtering
 In the Collaborative Filtering method, we build a user-item matrix. The matrix is a typical sparse matrix because there is a large amount of missing data about the rating of the item by the user.
 
 
@@ -368,18 +360,18 @@ Instead of direct computation with the user-item interaction matrix. We will dec
 Suppose we can extract the best underlying latent factor matrix that minimizing the loss between the reconstructed matrix and the original matrix. Then we can use the inner product of the user and item latent factor matrix for inferencing an unobserved rating.
 We use Matrix Factorization approach. There are several kinds of matrix factorization techniques, and each of them provides a different set of results, leading to different recommendations. This is the place where classic methods like Singular Value Decomposition, Principal Component Analysis. We mainly use SVD, SVDpp，and KNN. In this case, we use the Surprise package to help us control over the experiments and debug the different prediction algorithms. In Surprise package, there are various built-in and ready-to-use prediction algorithms such as baseline algorithms, neighborhood methods, matrix factorization-based ( SVD, PMF, SVD++, NMF), and many others. It also, various similarity measures (cosine, MSD, pearson) are built-in. 
 
-### 5.4	Hyper Parameter Optimization
+### 4.4	Hyper Parameter Optimization
 In collaborative filtering recommender, we use Surprise to analyse and compare the algorithms’ performance. Cross-validation procedures can be run very easily using powerful CV iterators (inspired by scikit-learn excellent tools), as well as exhaustive search over a set of parameters.
 """)
 
 st.dataframe(df4)
 
 st.write("""
-## 6.	We optimize the parameters by using Root Mean Square Error (RMSE). 
+## 5.	We optimize the parameters by using Root Mean Square Error (RMSE). 
 
 Finally we find SVDpp is the best model for collaborative filtering. Performance and Evaluation
 
-### 6.1	Off-line evaluation metrics & result
+### 5.1	Off-line evaluation metrics & result
 
 The evaluation questionnaire consisted of fourteen questions. It was based on previous work in the movie recommender domain from Ekstrand et al. (2014), and was adapted to the fashion recommendation. Per question, users needed to select one recommendation list that would contain either the best (e.g., having the most attractive suggestions) or the worst recommendations (e.g., having the least appealing suggestions), in relation to different evaluation metrics. This setup allowed for asymmetrical user preferences, in the sense that the least chosen “best option” may not be the worst.
 
@@ -439,7 +431,7 @@ st.write("""
 To examine which algorithm had the best performance per metric, we performed pairwise t-tests per questionnaire item. And calculate the t-statistics, while the p-values are indicated by asterisks in superscript. The tests were performed by creating dummy variables for each algorithm, assigning the value 1 to an algorithm if its recommendation list was chosen by a user for a specific item. According to the p value, we found the recommender algorithms are evaluated differently across different metrics. And from the % of choosen, we found collaborative filtering is much better than popularity.
 
 
-### 6.2	The other evaluation methods & result
+### 5.2	The other evaluation methods & result
 
 
 The Long Tail plot is used to explore popularity patterns in user-item interaction data. Typically, a small number of items will make up most of the volume of interactions and this is referred to as the "head". The "long tail" typically consists of most products, but make up a small percent of interaction volume.
@@ -479,10 +471,13 @@ st.dataframe(df7)
 st.write("""
 In novelty, Collaborative Filtering is also best in all recommender system.
 
-## 7.	Conclusion
+## 6.	Conclusion
 The primary goal of this project is to provide recommendations to the user in a e-commerce website by making use of machine learning algorithms. We have designed and implemented the system using collaborative filtering and Pearson correlation coefficient. The dataset considered has the ratings given by the other users to a specific product and depending on the similarity between the rated product we try to recommend the products to our current user. Through a comprehensive comparison, we conclude that collaborative filtering is the best recommended effect, and among collaborative filtering, SVDpp algorithm is the optimal one.
 
 The future work of the project includes improving the efficiency of the system. And it should also be able to give appropriate recommendations to the users who don’t have any previous purchase history or to the new users. In future we can try to use recurrent neural networks and deep learning. With the help of deep learning techniques we can overcome some of the drawbacks of the matrix factorization technique. Deep learning uses recurrent neural networks to accommodate time in the recommender system which is not possible in the matrix factorization method. We can also work on providing sub-optimal recommendations to the user and record the reaction of the user and it can be used in the future by the system.
+
+## 7. State of work
+The whole project is really a team effort. At the beginning, all of us were involved in data collection and exploration to choose the most suitable fashion data source. Qi Zhang arranged some meetings with experts in the fashion domain to understand more about the topic. Both Zhipeng and Qi Zhang are participated in collaborative-filtering recommender study and design. Chihshen is mainly responsible for image-based model training, image crawler, image search system and recommender design, and streamlit report format preparation. Zhipeng is responsible for driving the project discussion and monitoring the project progress, aligning the internal meeting time and the meeting with our project instructor. Zhipeng mainly focuses on data manipulation, visualiztion, recommender design and evaluation. Along the project progress, all of us work close to each other in brainstorming, discussion, and report writing.
 
 
 Reference
