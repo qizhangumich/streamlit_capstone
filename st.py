@@ -113,42 +113,49 @@ In a data-driven business model, an accurate recommendation system can help comp
     
 E-commerce recommender systems can provide product recommendations to their customers and suggest what they might like to buy based on their past history of purchases, reviews, and/or product searches. There are three basic architectures for a recommender system:
 
-A.	Content-based systems:
+ > A.	Content-based systems:
 
 In the content-based system, our main goal is to make recommendations based on the user's search input, which can be either text or images. In the text part, we will organize the text into a vector based on the user's input, and compare it with the existing title's vector to find similar results. On the other hand, in the image part, considering that the images input by users may be very complicated, we use object detection model to find out the location of clothes and other clothing accessories in the image, and crop the location of clothes, and then use the crop result as a search to find similar clothes.
 
 The main idea of these algorithms is to recommend items that are similar to those that a customer rated highly in the past. User profiles and item profiles are created to capture unique characteristics used by the recommender system. We then use user and item profiles to predict the heuristics by computing the similarity scores between the user’s and item’s vectors.
 
-B.	Popularity-based filtering systems:
+ > B.	Popularity-based filtering systems:
 
 This approach eliminates the need for knowing other factors like user’s behavior, user preferences and other factors. Hence, the single-most factor considered is the rating to generate a scalable recommendation system. This increases the chances of user engagement as compared to when there was no recommendation system.
 
-C.	Collaborative filtering systems:
+ > C.	Collaborative filtering systems:
 
 This approach relies on past user behavior. The key advantage of this approach is that it does not require user profiles or item profiles, which can be challenging to build. The drawback of this approach is that it is suffers from what is known as the cold start problem. The model performances heavily depend on the “density” of user-item interaction. This means that when a new user or a new item comes into the system the model’s predictions can deteriorate substantially. There are two major methods in collaborative filtering: neighborhood methods and latent factor models:
-	Neighborhood methods: These techniques perform recommendation in terms of user/user and item/item similarity. User similarity can be measured in terms of the items they purchased. Item similarity can be measure in terms of the users who make the purchase. Similarity measures such as cosine similarity, Jaccard similarity, and Pearson correlation can be used to gauge the similarity between users and items.
+ >> 	Neighborhood methods: These techniques perform recommendation in terms of user/user and item/item similarity. User similarity can be measured in terms of the items they purchased. Item similarity can be measure in terms of the users who make the purchase. Similarity measures such as cosine similarity, Jaccard similarity, and Pearson correlation can be used to gauge the similarity between users and items.
  
-	Latent factor models: These methods try to explain user behavior by inferring the “factors” based upon user and item interactions. One way to implement this is by using matrix factorization which maps users and items into a K-dimension space. The resulting matrix can be estimated by the dot product of user vectors and item vectors shown below.
+ >> 	Latent factor models: These methods try to explain user behavior by inferring the “factors” based upon user and item interactions. One way to implement this is by using matrix factorization which maps users and items into a K-dimension space. The resulting matrix can be estimated by the dot product of user vectors and item vectors shown below.
 
 
 ### 2.2	Question Formulation and Ours’ work
 To build a recommender system that is capable of capturing customers’ preferences by:
 
-	How to build a recommendation system with different amount of user information
-	How to find similarity by learning and training on images and use it for similarity recommendation of images
-	Explore many different recommendation system models
-	How to evaluate the effectiveness of different models from the customer's perspective and find the most suitable model
+ > How to build a recommendation system with different amount of user information?
+ 
+ > How to find similarity by learning and training on images and use it for similarity recommendation of images?
+ 
+ > How to explore many different recommendation system models?
+ 
+ > How to evaluate the effectiveness of different models from the customer's perspective and find the most suitable model?
 
 We built two separate recommender systems in two datasets: amazon fashion data and amazon api data. We will use these three prototype recommender systems in answering the questions listed above.
 
 
 ### 2.3	Pipeline of Recommendation System
 The pipeline of a recommendation system has the following five phases 
-	Pre-processing 
-	Model Training 
-	Hyper Parameter Optimization 
-	Post Processing 
-	Evaluation.
+ > Pre-processing 
+ 
+ > Model Training 
+ 
+ > Hyper Parameter Optimization 
+ 
+ > Post Processing 
+ 
+ > Evaluation.
 
 
 
@@ -170,16 +177,24 @@ Qi, Zhang: Qi worked on the data cleaning, data exploration (text sentiment anal
 We use Amazon review dataset (2018),which is an updated version of the Amazon review dataset released in 2014. This dataset includes reviews (ratings, text, helpfulness votes), product metadata (descriptions, category information, price, brand, and image features), and links (also viewed/also bought graphs). It can be downloaded from the following website: http://deepyeti.ucsd.edu/jianmo/amazon/index.html. 
 For our team, we only use the sub-category AMAZON FASHION, which includes:
 A.	Reviews:
-In reviews, it include 
-	reviewerID - ID of the reviewer, e.g. A2SUAM1J3GNN3B
-	asin - ID of the product, e.g. 0000013714
-	reviewerName - name of the reviewer
-	vote - helpful votes of the review
-	reviewText - text of the review
-	overall - rating of the product
-	summary - summary of the review
-	reviewTime - time of the review (raw)
-	image - images that users post after they have received the product
+In reviews, it include:
+ > reviewerID - ID of the reviewer, e.g. A2SUAM1J3GNN3B
+ 
+ > asin - ID of the product, e.g. 0000013714 
+ 
+ > reviewerName - name of the reviewer
+ 
+ > vote - helpful votes of the review
+ 
+ > reviewText - text of the review
+ 
+ > overall - rating of the product
+ 
+ > summary - summary of the review
+ 
+ > reviewTime - time of the review (raw)
+ 
+ > image - images that users post after they have received the product
 
 B.	Metadata:
 In the meta transaction metadata for each review shown on the review page. Such information includes: Product information, e.g. color (white or black), size (large or small), package type (hardcover or electronics), etc. Product images that are taken after the user received the product. 
@@ -258,9 +273,11 @@ For API data, we first remove null value from the api data, and remove the dupli
 
 ## 5.	Model Analysis
 To build a recommender engine for a E-commerce giant like Amazon, there are many practical factors to consider:
-● Generalization: With the diverse categories of items that are available for sale the recommender engine needs to be able to recommend items across different categories.
-● Cold start/sparsity problems: How does the models handle new users and new items that do not exist in the current system? Moreover, what can you do to improve the model performance when the user and/or item have limited feedback information?
-● Scalability: When new data is available, how do you retrain the model? 
+ > Generalization: With the diverse categories of items that are available for sale the recommender engine needs to be able to recommend items across different categories.
+ 
+ > Cold start/sparsity problems: How does the models handle new users and new items that do not exist in the current system? Moreover, what can you do to improve the model performance when the user and/or item have limited feedback information?
+ 
+ > Scalability: When new data is available, how do you retrain the model? 
 
 ### 5.1	Content-based Recommendation
     
@@ -283,12 +300,37 @@ Using the object detection model helps us to know the position of the clothes an
 Considering the users' direct access to our website to find the content related to the product title using text search, we tried three nlp models to calculate the similar between the user input and the product there.
 
 Before introducing the nlp model, we would like to explain our process of processing the data. Among the top-fashion data we use, some of them are listed with multiple contents because of different colors or sizes. To calculate the similarity between the user input and the title in the top fashion data.
-	bag of words: Each word is computed as one-hot encoding, focusing only on the keyword itself and ignoring the context and syntax for comparison.
-	idf: If the fewer documents containing term, that is, the smaller the n, the larger the IDF, it means that term has good category differentiation ability.
-	tf-idf: add term frequency to idf for weighting, and use tf * idf to find the most representative titles
+Our input title and image is:
+""")
+
+st.image('./fig7.png')
 
 
 
+st.write("""
+ > bag of words: Each word is computed as one-hot encoding, focusing only on the keyword itself and ignoring the context and syntax for comparison.""")
+st.write('And top 3 of bag of words is:')
+st.image('./wob1.png')
+st.image('./wob2.png')
+st.image('./wob3.png')
+
+st.write("""
+ > idf: If the fewer documents containing term, that is, the smaller the n, the larger the IDF, it means that term has good category differentiation ability.
+ """)
+st.write('And top 3 of idf is:')
+st.image('./idf1.png')
+st.image('./idf2.png')
+st.image('./idf3.png')
+         
+         
+st.write("""
+ > tf-idf: add term frequency to idf for weighting, and use tf * idf to find the most representative titles""")
+st.write('And top 3 of tf-idf is:')
+st.image('./tf-idf1.png')
+st.image('./tf-idf2.png')
+st.image('./tf-idf3.png')
+
+st.write("""
 ### 5.2	Popularity-based Recommendation
 
 A common (and usually hard-to-beat) baseline approach is the Popularity model. This model is not actually personalized it simply recommends to a user the most popular anime that the user has not previously consumed.
@@ -316,8 +358,10 @@ In the Collaborative Filtering method, we build a user-item matrix. The matrix i
 
 
 A item-item or user-user similarity matrix is constructed based on the user-item matrix. We use to method in calculating similarity: 
-	Pearson correlation — The most well-known similarity metric for the linear relation is person correlation. It measures how similar two samples are based on the direction of how the value changes.
-	Cosine similarity — As the name mentioned, It measures the cosine angle of the two vectors in the multi-dimensional space. Two things can be similar together in terms of direction rather than magnitude.
+
+ > Pearson correlation — The most well-known similarity metric for the linear relation is person correlation. It measures how similar two samples are based on the direction of how the value changes.
+ 
+ > Cosine similarity — As the name mentioned, It measures the cosine angle of the two vectors in the multi-dimensional space. Two things can be similar together in terms of direction rather than magnitude.
 
 Instead of direct computation with the user-item interaction matrix. We will decompose the user-item interaction matrix into the latent factors matrix representing the lower-dimensional space that is more useful. The idea of decomposing is we believe that the observed user-item rating matrix is constructed from the underlying user and item latent factor matrix.
 
@@ -341,33 +385,33 @@ The evaluation questionnaire consisted of fourteen questions. It was based on pr
 
 Different subsets of questions addressed different evaluations metrics. To address a user's evaluation of our algorithms, we measured the perceived Accuracy of a recommendation list, the perceived Diversity within a list, whether a user perceived that a list was personalized toward her preferences (i.e., Understands Me), the experienced level of Satisfaction, and the perceived level of Novelty. The list of questions was as follows, noting that some questions were formulated positively, while others were formulated negatively:
 
-• Accuracy: Q1. Which list has more selections that you find appealing? [positive]
+ > Accuracy: Q1. Which list has more selections that you find appealing? [positive]
 
-• Accuracy: Q2. Which list has more obviously bad suggestions for you? [negative]
+ > Accuracy: Q2. Which list has more obviously bad suggestions for you? [negative]
 
-• Diversity: Q3. Which list has more products that are similar to each other? [negative]
+ > Diversity: Q3. Which list has more products that are similar to each other? [negative]
 
-• Diversity: Q4. Which list has a more varied selection of products? [positive]
+ > Diversity: Q4. Which list has a more varied selection of products? [positive]
 
-• Diversity: Q5. Which list has products that match a wider variety of preferences? [positive]
+ > Diversity: Q5. Which list has products that match a wider variety of preferences? [positive]
 
-• Understands Me: Q6. Which list better reflects your preferences in products? [positive]
+ > Understands Me: Q6. Which list better reflects your preferences in products? [positive]
 
-• Understands Me: Q7. Which list seems more personalized to your university ratings? [positive]
+ > Understands Me: Q7. Which list seems more personalized to your university ratings? [positive]
 
-• Understands Me: Q8. Which list represents mainstream ratings instead of your own? [negative]
+ > Understands Me: Q8. Which list represents mainstream ratings instead of your own? [negative]
 
-• Satisfaction: Q9. Which list would better help you find products to consider? [positive]
+ > Satisfaction: Q9. Which list would better help you find products to consider? [positive]
 
-• Satisfaction: Q10. Which list would you likely to recommend to your friends? [positive]
+ > Satisfaction: Q10. Which list would you likely to recommend to your friends? [positive]
 
-• Novelty: Q11. Which list has more products you did not expect? [positive]
+ > Novelty: Q11. Which list has more products you did not expect? [positive]
 
-• Novelty: Q12. Which list has more products that are familiar to you? [negative]
+ > Novelty: Q12. Which list has more products that are familiar to you? [negative]
 
-• Novelty: Q13. Which list has more pleasantly surprising products? [positive]
+ > Novelty: Q13. Which list has more pleasantly surprising products? [positive]
 
-• Novelty: Q14. Which list provides fewer new suggestions? [negative].
+ > Novelty: Q14. Which list provides fewer new suggestions? [negative].
 
 We compared how users evaluated different university recommendation lists, which were generated by different algorithms. We outlines per question the percentage of instances in a which recommendation list was chosen, designated by the algorithm generating it. Some questions contributed positively to a specific metric (e.g., Q1 to Accuracy), while those denoted in italics contributed negatively to that metric (e.g., Q2).""")
 
@@ -390,6 +434,7 @@ st.dataframe(df6)
 # Q12	23%	77%
 # Q13	18%	82%
 # Q14	19%	81%
+
 st.write("""
 To examine which algorithm had the best performance per metric, we performed pairwise t-tests per questionnaire item. And calculate the t-statistics, while the p-values are indicated by asterisks in superscript. The tests were performed by creating dummy variables for each algorithm, assigning the value 1 to an algorithm if its recommendation list was chosen by a user for a specific item. According to the p value, we found the recommender algorithms are evaluated differently across different metrics. And from the % of choosen, we found collaborative filtering is much better than popularity.
 
@@ -397,7 +442,8 @@ To examine which algorithm had the best performance per metric, we performed pai
 ### 6.2	The other evaluation methods & result
 
 
-The Long Tail plot is used to explore popularity patterns in user-item interaction data. Typically, a small number of items will make up most of the volume of interactions and this is referred to as the "head". The "long tail" typically consists of most products, but make up a small percent of interaction volume.""")
+The Long Tail plot is used to explore popularity patterns in user-item interaction data. Typically, a small number of items will make up most of the volume of interactions and this is referred to as the "head". The "long tail" typically consists of most products, but make up a small percent of interaction volume.
+""")
 
 st.image('./fig3.png')
 
@@ -433,24 +479,18 @@ st.dataframe(df7)
 st.write("""
 In novelty, Collaborative Filtering is also best in all recommender system.
 
-##7.	Conclusion
+## 7.	Conclusion
 The primary goal of this project is to provide recommendations to the user in a e-commerce website by making use of machine learning algorithms. We have designed and implemented the system using collaborative filtering and Pearson correlation coefficient. The dataset considered has the ratings given by the other users to a specific product and depending on the similarity between the rated product we try to recommend the products to our current user. Through a comprehensive comparison, we conclude that collaborative filtering is the best recommended effect, and among collaborative filtering, SVDpp algorithm is the optimal one.
 
 The future work of the project includes improving the efficiency of the system. And it should also be able to give appropriate recommendations to the users who don’t have any previous purchase history or to the new users. In future we can try to use recurrent neural networks and deep learning. With the help of deep learning techniques we can overcome some of the drawbacks of the matrix factorization technique. Deep learning uses recurrent neural networks to accommodate time in the recommender system which is not possible in the matrix factorization method. We can also work on providing sub-optimal recommendations to the user and record the reaction of the user and it can be used in the future by the system.
 
 
 Reference
-
-    # 一级标题
-    ## 二级标题
-    ### 三级标题
-
-    **强调**
-
-    >这是引用
-
-    . python    
-    . java    
-    . c/c++    
-    . rust    
+    
+    https://www.kaggle.com/datasets/ajaysh/women-apparel-recommendation-engine-amazoncom?sort=recent-comments
+    https://github.com/ultralytics/yolov5
+    
+    https://github.com/Abhinav1004/Apparel-Recommendation
+    
+    .
 """)
