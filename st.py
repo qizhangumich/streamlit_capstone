@@ -81,6 +81,13 @@ list_a = [
 df7 = pd.DataFrame(list_a, columns=['Method', 'Score'])
 
 
+st.sidebar.title("[Fashion Recommender System](top)")
+st.sidebar.header("[Abstract](1)")
+st.sidebar.header("[1. Introduction](2)")
+st.sidebar.header("[2. Data Pre-processing](3)")
+st.sidebar.header("[3. Model Analysis](4)")
+
+
 st.write("""
 
 
@@ -97,14 +104,15 @@ Qiaozhu Mei
 
 Team Members
 ZhiPeng, Luo, ChihShen, Hsu, Qi, Zhang
+""")
 
 
-
-
+st.write("""
 ##	Abstract
     
-There are three major approaches in building recommender systems in this project: content-based recommendation, popularity-based recommendation and collaborative filtering methods. Content-based recommenders are developed based on the top fashion dataset abstracted by Amazon Ads API. Bag of Words and TF-IDF are applied on product title to find the products with most similar titles. In addition, the image of the product can be input for recommendation by object detection and calculation. The quality of content-based recommenders is measured by the real users participating in the evaluation of recommending output using metrics including Accuracy, Diversity, User Satisfaction and Novelty based on designed questionnaire. For accuracy, bag of words and TF-IDF perform better than image-based method. Bag of words outperforms the others on Diversity. TF-IDF achieves higher user satisfaction. Bag of words surprisingly collect feedbacks higher on novelty. Popularity-based recommendation and collaborative filtering systems are developed based on Amazon Fashion Review data, evaluating Mean Average Recall, Coverage and Novelty on the test set with random recommender together. Collaborative-filtering methods achieves higher mean average recall and novelty performance. Random recommender has the largest coverage over 90%, which followed by collaborative-filtering methods achieving above 40%. Undoubtedly, popularity-based recommender is the one with smallest coverage as it recommends the same popular items to all users.
+There are three major approaches in building recommender systems in this project: content-based recommendation, popularity-based recommendation and collaborative filtering methods. Content-based recommenders are developed based on the top fashion dataset abstracted by Amazon Ads API. Bag of Words and TF-IDF are applied on product title to find the products with most similar titles. In addition, the image of the product can be input for recommendation by object detection and calculation. The quality of content-based recommenders is measured by the real users participating in the evaluation of recommending output using metrics including Accuracy, Diversity, User Satisfaction and Novelty based on designed questionnaire. For accuracy, bag of words and TF-IDF perform better than image-based method. Bag of words outperforms the others on Diversity. TF-IDF achieves higher user satisfaction. Bag of words surprisingly collect feedbacks higher on novelty. Popularity-based recommendation and collaborative filtering systems are developed based on Amazon Fashion Review data, evaluating Mean Average Recall, Coverage and Novelty on the test set with random recommender together. Collaborative-filtering methods achieves higher mean average recall and novelty performance. Random recommender has the largest coverage over 90%, which followed by collaborative-filtering methods achieving above 40%. Undoubtedly, popularity-based recommender is the one with smallest coverage as it recommends the same popular items to all users.""")
 
+st.write("""
 ## 1.	Introduction
     
 Fashion is a big market! From P.Smith, the revenue of the global apparel market was calculated to amount to some 1.5 trillion US and was predicted to achieve about 2 trillion dollars by 2026. Ian Mackenzie highlighted that about 35 percent of what consumers purchase on Amazon and 75 percent of what they watch on Netflix come from product recommendations. In a data-driven business model, an accurate recommendation system can help companies boost sales. 
@@ -169,40 +177,89 @@ The pipeline of a recommendation system has the following five phases
 
 
 
-## 3.	Data Source
+## 2.Data Pre-processing
     
     
-#### 3.1.	Amazon review dataset
-    
-We use Amazon review dataset (2018),which is an updated version of the Amazon review dataset released in 2014. This dataset includes reviews (ratings, text, helpfulness votes), product metadata (descriptions, category information, price, brand, and image features), and links (also viewed/also bought graphs). It can be downloaded from the following website: http://deepyeti.ucsd.edu/jianmo/amazon/index.html. 
-For our team, we only use the sub-category AMAZON FASHION, which includes:
-A.	Reviews:
-In reviews, it include:
- > reviewerID - ID of the reviewer, e.g. A2SUAM1J3GNN3B
- 
- > asin - ID of the product, e.g. 0000013714 
- 
- > reviewerName - name of the reviewer
- 
- > vote - helpful votes of the review
- 
- > reviewText - text of the review
- 
- > overall - rating of the product
- 
- > summary - summary of the review
- 
- > reviewTime - time of the review (raw)
- 
- > image - images that users post after they have received the product
+### 2.1 Data Acquisition
 
-B.	Metadata:
-In the meta transaction metadata for each review shown on the review page. Such information includes: Product information, e.g. color (white or black), size (large or small), package type (hardcover or electronics), etc. Product images that are taken after the user received the product. 
+There are two groups of datasets we used to explore different recommenders.
 
-#### 3.2	Amazon api datasets
+ > AMAZON FASHION reviews and metadata on Amazon review data (2018), prepared by Jianmo Ni, University of California, San Diego. They are used to explore popularity-based recommender and collaborative-filtering recommender and evaluated with random recommender together.
+ 
+ > Top Fashion. It is the dataset made by Amazon Ads API. It is utilized to explore content-based recommender which can make recommendation by text or image. The reason why we use this dataset is the lack of product type feature in amazon fashion dataset, which is the key feature to be used for object detection and image-based recommender model development. The crawled images from the hyperlinks in the dataset are packaged in the file image.zip which are used to train the model.
+
+#### Data Overview
+
+
+Amazon Fashion Review:
+ > 883 thousands review records with 12 features.
+ 
+ > Key features:
+ 
+ >> overall: rating score from customers
+ 
+ >> reviewTime: the time point submitting reviews
+ 
+ >> reviewerID: unique ID for each customer account
+ 
+ >> asin: Amazon product ID
+ 
+ >> reviewText: words of the reviews
+ 
+Amazon Fashion Metadata:
+
+ > 186 thousands product records with 16 features.
+ 
+ > Key features include title, brand, feature, price, id(asin) and image of the products.
+ 
+Top Fashion:
+ > 183 thousands product records with 19 features.
+ 
+ > Key features include title, brand, color, price, id(asin), product type and image of the products.
+
+
+### 2.2 Data Manipulation & Findings
     
-Since the review data is obtained by ucsd directly in the amazon crawler, although the crawler data includes the user's review data, but the crawler data includes some books, coats, jewelry, glasses, backpacks and other accessories in addition to clothing data, and the lack of label data to label these contents, so in the absence of the user's past browsing history It is easy to confuse the classification and difficult to recommend the content. Therefore, instead of using the data from ucsd, the analysis was conducted using the data obtained from the api. The content of the data is similar to the above uscd, including asin, title, image hyperlink, but the related comment data is missing.
+After loading fashion metadata, we firstly drop the duplicated product by asin, the product id in the dataset and remove the unnecessary features before merged with fashion review data on product id. After feature elimination and renaming, we only keep 6 columns rating, user_id, product_id, title, brand, image for further exploration. To eliminate personal bias for recommendation, we drop duplicates again by product_id and user_id together in case there are multiple purchases and reviews on the same product by the same people. Even though missing value occurs on brand and image, we don’t treat it at this moment because there will be a data filtering step later to support collaborative filtering recommendation. At this moment, the basic information about reviews and fashion items we can get is below:
 
+ > total number of reviews is: 875,121.
+ 
+ > number of unique reviewers is: 749,233.
+ 
+ > number of fashion items is: 186,189.
+ 
+ > average rating is 3.905 with standard deviation 1.419.
+ 
+ > sparsity of the user-item matrix is 0.00000627. This is a key parameter to be considered when developing collaborative filtering recommender.
+
+Rating for each product from customer is an important feature for recommendations. In the dataset, the rating scale is from 1 to 5. Assuming the rating score equals to or above 3 are good rating, we make a binary feature rating_class for exploratory data analysis with value 1 representing good rating, 0 for bad rating. In this dataset, there are 80% good ratings and 20% bad ratings.
+
+From Figure 2, five star ratings are given the most by the users to different products and lowest number of users rated the products with two star ratings. The fashion consumption boosted from 2012 and arrived at the first peak in the year 2016 shown in Figure 3. The time-series changed signal is valuable to understand the popularity items and trend, which in turn can support the recommendation strategy adjustment on e-commerce platform. """)
+
+st.image('./2_2_1.png')
+st.write("""Figure 2: Rating distribution""")
+
+st.image('./2_2_2.png')
+st.write("""Figure 3: Number of Reviews by Year
+
+
+Grouping by product_id, we calculate the average rating value and number of reviews for each product. From Figure 4, we can find that more products have the average rating score as integers. There are two possibilities. One is customers have unified attitudes to the product. Another one is that most of the products has only one purchasing and rating record. From further study about the sparsity, we can infer the reason should be the latter one. 
+""")
+
+st.image('./2_2_3.png')
+st.write("""Figure 4: Average Rating Value Distribution
+
+To better explore collaborative filtering and reduce computing cost, we filter to get the new data frame which contains products over 10 times rating and users who provides over 3 ratings to different products. This data filtering process reduce the volume of the data sharply from over 875 thousand pieces of records to 28 thousand, namely 96.7% reduction, generating the dataset with 7340 fashion items and 7605 users.
+
+As for the top fashion dataset to design content-based recommender, we drop the rows without the information of color or price, which reduces the data volume from 183,138 to 28,385. As the title will be used to calculate the similarity between product, we only consider the tile with token number larger than 4, assuming it can provide effective information. One of the most important step is duplicates removing to avoid recommending duplicate fashion item. Besides of removing the products with the same product id, we should also consider some of titles that differ only in several few words, which actually means the same thing. For example, the two titles below under different product id, but it is the same thing with different size. 
+ > woman's place is in the house and the senate shirts for Womens XXL White
+ > woman's place is in the house and the senate shirts for Womens M Grey
+
+Another import step is title cleaning by natural language processing, including stop words removing, special characteristics removing, lower-case transformation. 
+""")
+
+
+st.write("""
 #### 3.3	Deep Fashion
     
 We found that the deep fashion dataset includes these data, so we used the data to train the yolo model with a total of about 350,000 images.
