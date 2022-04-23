@@ -81,11 +81,11 @@ list_a = [
 df7 = pd.DataFrame(list_a, columns=['Method', 'Score'])
 
 
-st.sidebar.title("[Fashion Recommender System](top)")
-st.sidebar.header("[Abstract](1)")
-st.sidebar.header("[1. Introduction](2)")
-st.sidebar.header("[2. Data Pre-processing](3)")
-st.sidebar.header("[3. Model Analysis](4)")
+# st.sidebar.title("[Fashion Recommender System](top)")
+# st.sidebar.header("[Abstract](1)")
+# st.sidebar.header("[1. Introduction](2)")
+# st.sidebar.header("[2. Data Pre-processing](3)")
+# st.sidebar.header("[3. Model Analysis](4)")
 
 
 st.write("""
@@ -110,7 +110,7 @@ ZhiPeng, Luo, ChihShen, Hsu, Qi, Zhang
 st.write("""
 ##	Abstract
     
-There are three major approaches in building recommender systems in this project: content-based recommendation, popularity-based recommendation and collaborative filtering methods. Content-based recommenders are developed based on the top fashion dataset abstracted by Amazon Ads API. Bag of Words and TF-IDF are applied on product title to find the products with most similar titles. In addition, the image of the product can be input for recommendation by object detection and calculation. The quality of content-based recommenders is measured by the real users participating in the evaluation of recommending output using metrics including Accuracy, Diversity, User Satisfaction and Novelty based on designed questionnaire. For accuracy, bag of words and TF-IDF perform better than image-based method. Bag of words outperforms the others on Diversity. TF-IDF achieves higher user satisfaction. Bag of words surprisingly collect feedbacks higher on novelty. Popularity-based recommendation and collaborative filtering systems are developed based on Amazon Fashion Review data, evaluating Mean Average Recall, Coverage and Novelty on the test set with random recommender together. Collaborative-filtering methods achieves higher mean average recall and novelty performance. Random recommender has the largest coverage over 90%, which followed by collaborative-filtering methods achieving above 40%. Undoubtedly, popularity-based recommender is the one with smallest coverage as it recommends the same popular items to all users.""")
+There are three major approaches in building recommender systems in this project: content-based recommendation, popularity-based recommendation, and collaborative filtering methods. Content-based recommenders are developed based on the top fashion dataset abstracted by Amazon Ads API. Bag of Words and TF-IDF are applied on product titles to find the products with the most similar titles. In addition, the image of the product can be input for recommendation by object detection and calculation. The quality of content-based recommenders is measured by the real users participating in the evaluation of recommending output using metrics including Accuracy, Diversity, User Satisfaction and Novelty based on designed questionnaire. For accuracy, TF-IDF performs best than bag of words. Image-based model outperforms the others on Diversity. TF-IDF achieves higher user satisfaction. Bag of Words surprisingly collects feedback higher on novelty. Popularity-based recommendation and collaborative filtering systems are developed based on Amazon Fashion Review data, evaluating Mean Average Recall, Coverage and Novelty on the test set with random recommender together. Collaborative-filtering methods achieve higher mean average recall and novelty performance. Random recommender has the largest coverage, over 90%, which is followed by collaborative-filtering methods achieving above 40%. Undoubtedly, popularity-based recommender is the one with smallest coverage as it recommends the same popular items to all users.""")
 
 st.write("""
 ## 1.	Introduction
@@ -260,7 +260,7 @@ Another import step is title cleaning by natural language processing, including 
 
 
 st.write("""
-#### 3.3	Deep Fashion
+#### 2.3	Deep Fashion
     
 We found that the deep fashion dataset includes these data, so we used the data to train the yolo model with a total of about 350,000 images.
 
