@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-
 list_a = [['reviewerID',	0],
 ['reviewTime',	0],
 ['asin',	0],
@@ -277,8 +276,6 @@ Number of missing values across columns :
 
 
 
-
-
 # 	Number of missing values across columns
 # reviewerID	0
 # reviewTime	0
@@ -543,30 +540,30 @@ st.dataframe(df7)
 st.write("""
 In novelty, Collaborative Filtering is also best in all recommender system.
 
-## 6.	Conclusion
-The primary goal of this project is to provide recommendations to the user in a e-commerce website by making use of machine learning algorithms. We have designed and implemented the system using collaborative filtering and Pearson correlation coefficient. The dataset considered has the ratings given by the other users to a specific product and depending on the similarity between the rated product we try to recommend the products to our current user. Through a comprehensive comparison, we conclude that collaborative filtering is the best recommended effect, and among collaborative filtering, SVDpp algorithm is the optimal one.
+## 5.	Conclusion
+Fashion is a very interesting thing. In addition to the large market size, its trends change very quickly. Benefit from the fast-changing nature of fashion, data-based insight generation mechanism becomes particularly important. Because of this, personalized recommendation algorithms also become more valuable.  
 
-The future work of the project includes improving the efficiency of the system. And it should also be able to give appropriate recommendations to the users who don’t have any previous purchase history or to the new users. In future we can try to use recurrent neural networks and deep learning. With the help of deep learning techniques we can overcome some of the drawbacks of the matrix factorization technique. Deep learning uses recurrent neural networks to accommodate time in the recommender system which is not possible in the matrix factorization method. We can also work on providing sub-optimal recommendations to the user and record the reaction of the user and it can be used in the future by the system.
+In this report, we use three types of recommendation systems, collaborative filtering, popularity-based and content-based recommender. In collaborative filtering algorithm we explored KNN, SVD, NMF and so on, utilizing cross validation to discover the algorithm, SVDpp, with best performance on RMSE measurement. In content-based algorithm, we explored TF-IDF, Image, Bag of words.  
 
-## 7. State of work
+In the evaluation session, we mainly used two methods.  
 
+ 1) For the popularity based, collaborative filtering, we use a specialized analysis tool recmetrics, to evaluate whether the relevance of the recommended results is high and sufficiently novel as we expected. We finally found that Collaborative Filtering outperformed several other recommended methods. 
 
-> Qi Zhang: Chief Marketing Officer
+ 2) For the three methods of content-base TF-IDF, Bag of words, and image-based algorithm, we used the offline evaluation method. We designed a list of 14 questions, these questions are related to the accuracy, variety, satisfaction and novelty of the recommended model dimensions. We finally found that the TF-IDF method outperformed the other two methods in accuracy and satisfaction scenarios, image-based recommender performed well in diversity scenario, and Bag of words performed better in novelty case. 
 
-> Chihshen: Chief Technology Officer
+The future work of the project includes improving the efficiency of the system. And it should also be able to give appropriate recommendations to the users who don’t have any previous purchase history or to the new users. In future we can try to use recurrent neural networks and deep learning. With the help of deep learning techniques we can overcome some of the drawbacks of the matrix factorization technique. Deep learning uses recurrent neural networks to accommodate time in the recommender system which is not possible in the matrix factorization method. We can also work on providing sub-optimal recommendations to the user and record the reaction of the user and it can be used in the future by the system. 
 
-> Zhipeng: Chief Product Officer
+## 6. State of work
 
-
-The whole project is really a team effort. At the beginning, all of us were involved in data collection and exploration to choose the most suitable fashion data source. Qi Zhang arranged some meetings with experts in the fashion domain to understand more about the topic. Both Zhipeng and Qi Zhang are participated in collaborative-filtering recommender study and design. Chihshen is mainly responsible for image-based model training, image crawler, image search system and recommender design, and streamlit report format preparation. Zhipeng is responsible for driving the project discussion and monitoring the project progress, aligning the internal meeting time and the meeting with our project instructor. Zhipeng mainly focuses on data manipulation, visualiztion, recommender design and evaluation. Along the project progress, all of us work close to each other in brainstorming, discussion, and report writing.
-
+The whole project is really a team effort. At the beginning, all of us were involved in data collection and exploration to choose the most suitable fashion data source. Qi Zhang arranged some meetings with experts in the fashion domain to understand more about the topic. Both Zhipeng and Qi Zhang participated in collaborative-filtering recommender and popularity-based recommender study and design. Chihshen is mainly responsible for text-based and image-based model training and recommender design, and streamlit report format preparation. Zhipeng is responsible for driving the project discussion and monitoring the project progress, aligning the internal meeting time and the meeting with our project instructor. Along the project progress, all of us work close to each other in brainstorming, data manipulation, visualization, model evaluation, and report writing. 
 
 Reference
-    https://medium.com/@cfpinela/recommender-systems-user-based-and-item-based-collaborative-filtering-5d5f375a127f
-    https://www.kaggle.com/datasets/ajaysh/women-apparel-recommendation-engine-amazoncom?sort=recent-comments
-    https://github.com/ultralytics/yolov5
-    
-    https://github.com/Abhinav1004/Apparel-Recommendation
+    1. Global apparel market – statistics & facts, P.Smith, Mar 3, 2022  https://www.statista.com/topics/5091/apparel-market-worldwide/#dossierKeyfigures 
+    2. How retailers can keep up with consumers, I.Mackenzie, C.Meyer, S.Noble, Oct 1, 2013, https://www.mckinsey.com/industries/retail/our-insights/how-retailers-can-keep-up-with-consumers 
+    3. Cold start (recommender systems), Wikipedia, retrieving on Apr 22, 2022, https://en.wikipedia.org/wiki/Cold_start_(recommender_systems) 
+    4. Recommender Systems – User-Based and Item-Based Collaborative Filtering, Carlos Pinela, Medium, Nov 6, 2017, https://medium.com/@cfpinela/recommender-systems-user-based-and-item-based-collaborative-filtering-5d5f375a127f 
+    5. Ekstrand, M. D., Harper, F. M., Willemsen, M. C., and Konstan, J. A. (2014). “User perception of differences in recommender algorithms,” in Proceedings of the 8th ACM Conference on Recommender Systems (Foster City, CA: ACM), 161–168. 
+    6. Mehdi Elahi1*, Alain Starke1,2, Nabil El Ioini3, Anna Alexander Lambrix3 and Christoph Trattner1.(2022) “Developing and Evaluating a University Recommender System” in Front. Artif. Intell., 02 February 2022 | https://doi.org/10.3389/frai.2021.796268 
     
     .
 """)
