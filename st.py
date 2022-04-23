@@ -101,51 +101,60 @@ ZhiPeng, Luo, ChihShen, Hsu, Qi, Zhang
 
 
 
-## 1.	Abstract
+##	Abstract
     
-There are three major approaches in building recommender systems: content-based recommendation, popularity-based recommendation and collaborative filtering methods. Content-based systems recommend items with similar properties of items users have liked in the past. Popularity-based recommendation works on the principle of popularity and or anything which check about the most popular product among the users and directly recommend. Collaborative filtering systems recommend items based on user-items similarities. Our project team has explored all three of these mainstream recommender systems. For example, content based is more based on search engines, while collaborative filtering is more based on user habits and correlations between products. The project team mainly used the following fashion-related databases for data selection, one is from amazon api data，it mainly includes the titles and pictures of clothes sold on amazon.com,the other is reviews of fashion and their corresponding product metadata on Amazon. In terms of evaluation, we have adopted two main methods, one method is offline method. We selected 30 users who will have similar user association with our database, and we will observe their feedback on our recommendation results and record the feedback to form our evaluation of different recommendation models；the other evaluation method is [志鹏补充]
+There are three major approaches in building recommender systems in this project: content-based recommendation, popularity-based recommendation and collaborative filtering methods. Content-based recommenders are developed based on the top fashion dataset abstracted by Amazon Ads API. Bag of Words and TF-IDF are applied on product title to find the products with most similar titles. In addition, the image of the product can be input for recommendation by object detection and calculation. The quality of content-based recommenders is measured by the real users participating in the evaluation of recommending output using metrics including Accuracy, Diversity, User Satisfaction and Novelty based on designed questionnaire. For accuracy, bag of words and TF-IDF perform better than image-based method. Bag of words outperforms the others on Diversity. TF-IDF achieves higher user satisfaction. Bag of words surprisingly collect feedbacks higher on novelty. Popularity-based recommendation and collaborative filtering systems are developed based on Amazon Fashion Review data, evaluating Mean Average Recall, Coverage and Novelty on the test set with random recommender together. Collaborative-filtering methods achieves higher mean average recall and novelty performance. Random recommender has the largest coverage over 90%, which followed by collaborative-filtering methods achieving above 40%. Undoubtedly, popularity-based recommender is the one with smallest coverage as it recommends the same popular items to all users.
 
-## 2.	Introduction
+## 1.	Introduction
     
-In a data-driven business model, an accurate recommendation system can help companies boost sales, and the more data there is, the more accurate the predictions, generally speaking. But not all companies accumulate a large amount of data at the beginning, so we need to design recommender systems according to different scenarios. We will build models under content-based (text, image), popularity-based, and collaborative filtering approaches. These models have different roles, of which the first two can be used for cold-start scenarios with relatively little data, while collaborative filtering, especially the item-item approach, is more applicable to companies with mounts of data accumulation.
+Fashion is a big market! From P.Smith, the revenue of the global apparel market was calculated to amount to some 1.5 trillion US and was predicted to achieve about 2 trillion dollars by 2026. Ian Mackenzie highlighted that about 35 percent of what consumers purchase on Amazon and 75 percent of what they watch on Netflix come from product recommendations. In a data-driven business model, an accurate recommendation system can help companies boost sales. 
 
-### 2.1	 Recommender system
+In this project, we build content-based (text, image), popularity-based, and collaborative filtering models. These models have different roles, of which the first two can be used for cold-start scenarios with relatively little data, while collaborative filtering, especially the item-item approach, is more applicable to companies with amounts of data accumulation.
+
+
+### 1.1	 Recommender system
     
-E-commerce recommender systems can provide product recommendations to their customers and suggest what they might like to buy based on their past history of purchases, reviews, and/or product searches. There are three basic architectures for a recommender system:
+E-commerce recommender systems can provide product recommendations to their customers and suggest what they might like to buy based on their past histories of purchases, reviews, and/or product searches. There are three basic architectures for a recommender system introduced in our project:
 
  > A.	Content-based systems:
 
-In the content-based system, our main goal is to make recommendations based on the user's search input, which can be either text or images. In the text part, we will organize the text into a vector based on the user's input, and compare it with the existing title's vector to find similar results. On the other hand, in the image part, considering that the images input by users may be very complicated, we use object detection model to find out the location of clothes and other clothing accessories in the image, and crop the location of clothes, and then use the crop result as a search to find similar clothes.
+In the content-based system, our main goal is to make recommendations based on the user's search input, which can be either text or images. In the text part, we will organize the text into a vector based on the product title that the user is currently reading, and compare it with the existing title's vector to find similar results. On the other hand, in the image part, considering that the images input by users may be very complicated, we use object detection model to find out the location of clothes and other clothing accessories in the image, and crop the location of clothes, and then use the crop result as a search to find similar clothes.
 
-The main idea of these algorithms is to recommend items that are similar to those that a customer rated highly in the past. User profiles and item profiles are created to capture unique characteristics used by the recommender system. We then use user and item profiles to predict the heuristics by computing the similarity scores between the user’s and item’s vectors.
+The main idea of these algorithms is to recommend items that are similar to those that a customer rated highly in the past. User profiles and item profiles are created to capture unique characteristics used by the recommender system. We then use user-item profiles to predict the heuristics by computing the similarity scores between the user’s and item’s vectors.
 
  > B.	Popularity-based filtering systems:
 
-This approach eliminates the need for knowing other factors like user’s behavior, user preferences and other factors. Hence, the single-most factor considered is the rating to generate a scalable recommendation system. This increases the chances of user engagement as compared to when there was no recommendation system.
+It is another method to deal with the "cold start" problem. Popularity based recommendation system works with the trend. It basically uses the items which are in trend right now. For example, if any product which is usually bought by every new user, then there are chances that it may suggest that item to the user who just signed up. This approach eliminates the need for knowing other factors like user’s behavior, user preferences and other factors. Hence, the single-most factor considered is the rating to generate a scalable recommendation system. This increases the chances of user engagement as compared to when there was no recommendation system.
+
+The problem with popularity-based recommendation system is that the personalization is not available with this method, namely even though you know the behavior of the user, you cannot recommend items accordingly.
+
 
  > C.	Collaborative filtering systems:
 
-This approach relies on past user behavior. The key advantage of this approach is that it does not require user profiles or item profiles, which can be challenging to build. The drawback of this approach is that it is suffers from what is known as the cold start problem. The model performances heavily depend on the “density” of user-item interaction. This means that when a new user or a new item comes into the system the model’s predictions can deteriorate substantially. There are two major methods in collaborative filtering: neighborhood methods and latent factor models:
+Recommending the new items to users based on the interest and preference of other similar users is basically collaborative-based filtering, shown as the image below. The key advantage of this approach is that it does not require user profiles or item profiles, which can be challenging to build. This overcomes the disadvantage of content-based filtering as it will use the user Interaction instead of content from the items used by the users.""")
+
+st.image('1_3._introdiction.jpg')
+
+st.write("""
+Figure 1: Collaborative-filtering mechanism
+
+The drawback of this approach is that it is suffers from what is known as the cold start problem. The model performances heavily depend on the “density” of user-item interaction. This means that when a new user or a new item comes into the system the model’s predictions can deteriorate substantially. There are two major methods in collaborative filtering: neighborhood methods and latent factor models:
+
  >> 	Neighborhood methods: These techniques perform recommendation in terms of user/user and item/item similarity. User similarity can be measured in terms of the items they purchased. Item similarity can be measure in terms of the users who make the purchase. Similarity measures such as cosine similarity, Jaccard similarity, and Pearson correlation can be used to gauge the similarity between users and items.
  
  >> 	Latent factor models: These methods try to explain user behavior by inferring the “factors” based upon user and item interactions. One way to implement this is by using matrix factorization which maps users and items into a K-dimension space. The resulting matrix can be estimated by the dot product of user vectors and item vectors shown below.
 
 
-### 2.2	Question Formulation and Ours’ work
-To build a recommender system that is capable of capturing customers’ preferences by:
+### 1.2	Question Formulation and Our work
+We organize the works for recommender exploration and study by tackling the following questions:
 
- > How to build a recommendation system with different amount of user information?
+ > How to build a recommendation system with different kinds of data?
  
- > How to find similarity by learning and training on images and use it for similarity recommendation of images?
+ > How about the pre-processing steps for each recommender design?
  
- > How to explore many different recommendation system models?
- 
- > How to evaluate the effectiveness of different models from the customer's perspective and find the most suitable model?
+ > How to evaluate the performance of recommenders?
 
-We built two separate recommender systems in two datasets: amazon fashion data and amazon api data. We will use these three prototype recommender systems in answering the questions listed above.
-
-
-### 2.3	Pipeline of Recommendation System
+### 1.3	Pipeline of Recommendation System
 The pipeline of a recommendation system has the following five phases 
  > Pre-processing 
  
@@ -494,7 +503,7 @@ The whole project is really a team effort. At the beginning, all of us were invo
 
 
 Reference
-    
+    https://medium.com/@cfpinela/recommender-systems-user-based-and-item-based-collaborative-filtering-5d5f375a127f
     https://www.kaggle.com/datasets/ajaysh/women-apparel-recommendation-engine-amazoncom?sort=recent-comments
     https://github.com/ultralytics/yolov5
     
